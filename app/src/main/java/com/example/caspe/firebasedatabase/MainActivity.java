@@ -13,7 +13,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
+//Sofie
 public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
                 Log.w(TAG, "Failed to read value.", databaseError.toException());
             }
+
         });
 
         if (FirebaseAuth.getInstance().getCurrentUser() == null){
