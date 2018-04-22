@@ -12,6 +12,8 @@ public class ShoppingList {
     List<User> users;
     List<Item> items;
 
+    public ShoppingList() {
+    }
 
     public ShoppingList(int id, String name, List<User> users, List<Item> items) {
         this.id = id;

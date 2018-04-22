@@ -12,6 +12,8 @@ public class User {
     String email;
     List<ShoppingList> shoppingListList;
 
+    public User() {
+    }
 
     public User(String id, String name, String email, List<ShoppingList> shoppingListList) {
         this.id = id;
