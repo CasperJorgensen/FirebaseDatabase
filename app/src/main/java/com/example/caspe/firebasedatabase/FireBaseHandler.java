@@ -33,7 +33,6 @@ public class FireBaseHandler {
         shoppingList.setName(name);
 
 
-        shoppingList.setUsers();
     }
 
 }

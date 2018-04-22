@@ -32,32 +32,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
        mAuth = FirebaseAuth.getInstance();
-     //  String uid = mAuth.getCurrentUser().getUid();
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final TextView textView = (TextView)findViewById(R.id.text);
-     //DatabaseReference userDB = database.getReference().child("users").child(uid);
-
-
-
-/*
-        userDB.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                OverViewUser = dataSnapshot.getValue(User.class);
-
-
-                Toast.makeText(MainActivity.this, OverViewUser.getName(),
-                        Toast.LENGTH_LONG).show();
-
-                textView.setText(OverViewUser.getName());
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed: " + databaseError.getCode());
-            }
-        });
-*/
 
 
         if (FirebaseAuth.getInstance().getCurrentUser() == null){
