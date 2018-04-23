@@ -76,7 +76,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                createList();
+                Intent intent = new Intent(MainActivity.this, CreateShoopingListActivity.class);
+                startActivity(intent);
+               // createList();
             }
         });
 
@@ -87,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
 
-                addPerson();
+         addPerson();
            }
         });
 
