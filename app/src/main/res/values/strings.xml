@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">FirebaseDatabase</string>
+    <string name="createList">Create list</string>
 </resources>

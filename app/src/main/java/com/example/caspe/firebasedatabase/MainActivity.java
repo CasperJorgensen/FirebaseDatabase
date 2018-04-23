@@ -1,12 +1,19 @@
 package com.example.caspe.firebasedatabase;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
     private int SIGN_IN_REQUEST_CODE = 1;
     private String TAG;
     User OverViewUser;
+    private String m_Text = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                 getUser();
 
 
-                getGroups();
+                //getGroups();
 
         }
 
@@ -165,8 +174,8 @@ public void getGroups() {
 
 
 
-                Toast.makeText(MainActivity.this, "" + OverViewUser.getShoppingList().size(),
-                        Toast.LENGTH_LONG).show();
+                //Toast.makeText(MainActivity.this, "" + OverViewUser.getShoppingList().size(),
+                  //      Toast.LENGTH_LONG).show();
 
                 textView.setText(OverViewUser.getName());
             }
@@ -204,14 +213,48 @@ public void getGroups() {
 
 
     public void createList(){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("title");
+
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        builder.setView(input);
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                m_Text = input.getText().toString();
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
         FireBaseHandler fire = new FireBaseHandler();
-
-
-
         fire.AddShoppingList("Test 3", OverViewUser);
+
     }
 
 
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.createList:
+                createList();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
 
 }

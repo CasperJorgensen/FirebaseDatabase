@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/FirebaseDatabase.iml" filepath="$PROJECT_DIR$/.idea/FirebaseDatabase.iml" />
-      <module fileurl="file://C:\Users\sofie\AndroidStudioProjects\FirebaseDatabase\FirebaseDatabase.iml" filepath="C:\Users\sofie\AndroidStudioProjects\FirebaseDatabase\FirebaseDatabase.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FirebaseDatabase.iml" filepath="$PROJECT_DIR$/FirebaseDatabase.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
