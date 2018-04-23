@@ -1,35 +1,25 @@
 package com.example.caspe.firebasedatabase.Model;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by sofie on 16-04-2018.
  */
 
 public class ShoppingList {
-    int id;
+
     String name;
-    List<User> users;
+    Map<String, Boolean> users;
     List<Item> items;
 
     public ShoppingList() {
     }
 
-    public ShoppingList(int id, String name, List<User> users, List<Item> items) {
-        this.id = id;
-        this.name = name;
-        this.users = users;
-        this.items = items;
-    }
 
 
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+
 
     public String getName() {
         return name;
@@ -39,11 +29,11 @@ public class ShoppingList {
         this.name = name;
     }
 
-    public List<User> getUsers() {
+    public Map<String, Boolean> getUsers() {
         return users;
     }
 
-    public void setUsers(List<User> users) {
+    public void setUsers(Map<String, Boolean> users) {
         this.users = users;
     }
 
