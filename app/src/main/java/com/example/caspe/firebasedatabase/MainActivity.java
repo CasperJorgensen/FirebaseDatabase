@@ -24,13 +24,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 //Sofie
 public class MainActivity extends AppCompatActivity {
-
+    private ArrayList<Map<String, Boolean>> data;
     ShoppingList shop;
     List<User> users;
     private FirebaseAuth mAuth;
@@ -122,12 +123,16 @@ public void getGroups() {
     DatabaseReference userDB = database.getReference().child("shoppingLists").child("Test 3");
 
 
+
     userDB.addValueEventListener(new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
 
 
             shop = dataSnapshot.getValue(ShoppingList.class);
+
+
+
 
            /* for (Map.Entry<String, Boolean> entry : shop.getUsers().entrySet()) {
 
@@ -158,7 +163,9 @@ public void getGroups() {
                 OverViewUser = dataSnapshot.getValue(User.class);
 
 
-                Toast.makeText(MainActivity.this, OverViewUser.getName(),
+
+
+                Toast.makeText(MainActivity.this, "" + OverViewUser.getShoppingList().size(),
                         Toast.LENGTH_LONG).show();
 
                 textView.setText(OverViewUser.getName());

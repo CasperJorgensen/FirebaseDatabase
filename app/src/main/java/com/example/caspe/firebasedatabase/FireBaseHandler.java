@@ -43,14 +43,22 @@ public class FireBaseHandler {
         shoppingList.setUsers(map);
 
 
-        Map<String, Boolean> shoppingListlist = new HashMap<>();
+      /*  Map<String, Boolean> shoppingListlist = new HashMap<>();
+
 
         shoppingListlist.put(name, true);
-        user.setShoppingList(shoppingListlist);
+        user.setShoppingList(shoppingListlist); */
+
+
+        DatabaseReference hopperRef = mDatabase.child("users").child(userId).child("shoppingLists");
+        Map<String, Object> hopperUpdates = new HashMap<>();
+        hopperUpdates.put(name, true);
+
+        hopperRef.updateChildren(hopperUpdates);
 
         mDatabase.child("shoppingLists").child(name).setValue(shoppingList);
 
-        mDatabase.child("users").child(userId).setValue(user);
+       // mDatabase.child("users").child(userId).setValue(user);
 
     }
 
