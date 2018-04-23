@@ -5,6 +5,9 @@
     <item
         android:id="@+id/createList"
         android:title="@string/createList"
-
         />
+
+    <item
+        android:id="@+id/signOut"
+        android:title="Sign out" />
 </menu>

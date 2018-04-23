@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.example.caspe.firebasedatabase.Model.ShoppingList;
 import com.example.caspe.firebasedatabase.Model.User;
 import com.firebase.ui.auth.AuthUI;
+import com.firebase.ui.auth.ui.email.SignInActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -215,13 +216,13 @@ public void getGroups() {
     public void createList(){
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("title");
+        builder.setTitle("Create new list");
 
         final EditText input = new EditText(this);
         input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         builder.setView(input);
 
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Create", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 m_Text = input.getText().toString();
@@ -234,8 +235,10 @@ public void getGroups() {
             }
         });
 
+        builder.show();
+
         FireBaseHandler fire = new FireBaseHandler();
-        fire.AddShoppingList("Test 3", OverViewUser);
+        fire.AddShoppingList(m_Text, OverViewUser);
 
     }
 
@@ -251,6 +254,9 @@ public void getGroups() {
             case R.id.createList:
                 createList();
                 return true;
+            case R.id.signOut:
+                mAuth.signOut();
+                startActivity(new Intent(this, SignInActivity.class));
             default:
                 return super.onOptionsItemSelected(item);
         }
