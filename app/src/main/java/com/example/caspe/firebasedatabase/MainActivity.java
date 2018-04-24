@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,11 +48,23 @@ public class MainActivity extends AppCompatActivity {
     private String TAG;
     User OverViewUser;
     private String m_Text = "";
+    private CardArrayAdapter cardArrayAdapter;
+    private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        listView = (ListView) findViewById(R.id.card_listView);
+
+        listView.addHeaderView(new View(this));
+        listView.addFooterView(new View(this));
+
+        cardArrayAdapter = new CardArrayAdapter(getApplicationContext(), R.layout.list_item_card);
+
+
 
        mAuth = FirebaseAuth.getInstance();
 
@@ -75,10 +88,9 @@ public class MainActivity extends AppCompatActivity {
                     , Toast.LENGTH_LONG).show();
 
 
-                getUser();
+            getUser();
 
 
-                //getGroups();
 
         }
 
@@ -125,12 +137,15 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-public void getGroups() {
+public void getGroups(String groupName) {
     mAuth = FirebaseAuth.getInstance();
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-    DatabaseReference userDB = database.getReference().child("shoppingLists").child("Test 3");
+    DatabaseReference userDB = database.getReference().child("shoppingLists").child(groupName);
+
+
+
 
 
 
@@ -143,12 +158,14 @@ public void getGroups() {
 
 
 
+            Toast.makeText(MainActivity.this, shop.getName(),
+                    Toast.LENGTH_LONG).show();
 
-           /* for (Map.Entry<String, Boolean> entry : shop.getUsers().entrySet()) {
+        for (Map.Entry<String, Boolean> entry : shop.getUsers().entrySet()) {
 
                 Toast.makeText(MainActivity.this, entry.getValue().toString() + entry.getKey().toString(),
                         Toast.LENGTH_LONG).show();
-            } */
+            }
         }
 
         @Override
@@ -172,11 +189,28 @@ public void getGroups() {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 OverViewUser = dataSnapshot.getValue(User.class);
 
+                if (OverViewUser != null) {
+
+                    if (OverViewUser.getShoppingList() != null) {
+
+                        cardArrayAdapter.clear();
+
+                        for (Map.Entry<String, Boolean> entry : OverViewUser.getShoppingList().entrySet()) {
+
+                            Card card = new Card(entry.getKey(), entry.getValue().toString());
+                            cardArrayAdapter.add(card);
+                        }
+
+                        listView.setAdapter(cardArrayAdapter);
 
 
+                        for (Map.Entry<String, Boolean> entry : OverViewUser.getShoppingList().entrySet()) {
 
-                //Toast.makeText(MainActivity.this, "" + OverViewUser.getShoppingList().size(),
-                  //      Toast.LENGTH_LONG).show();
+                            getGroups(entry.getKey());
+
+                        }
+                    }
+                }
 
                 textView.setText(OverViewUser.getName());
             }
@@ -201,15 +235,10 @@ public void getGroups() {
 
     public void addPerson(){
 
-
-
                 Map<String, Boolean> map;
                 map = shop.getUsers();
                 FireBaseHandler fire = new FireBaseHandler();
-
                 fire.addUserToShoppingList("Test 3", "52e5BgUocRNDJGrNLsqBGgkxOe73", map);
-
-
             }
 
 
@@ -226,6 +255,9 @@ public void getGroups() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 m_Text = input.getText().toString();
+
+                FireBaseHandler fire = new FireBaseHandler();
+                fire.AddShoppingList(m_Text, OverViewUser);
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -237,8 +269,7 @@ public void getGroups() {
 
         builder.show();
 
-        FireBaseHandler fire = new FireBaseHandler();
-        fire.AddShoppingList(m_Text, OverViewUser);
+
 
     }
 

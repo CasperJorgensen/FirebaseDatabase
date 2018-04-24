@@ -50,7 +50,7 @@ public class FireBaseHandler {
         user.setShoppingList(shoppingListlist); */
 
 
-        DatabaseReference hopperRef = mDatabase.child("users").child(userId).child("shoppingLists");
+        DatabaseReference hopperRef = mDatabase.child("users").child(userId).child("shoppingList");
         Map<String, Object> hopperUpdates = new HashMap<>();
         hopperUpdates.put(name, true);
 
