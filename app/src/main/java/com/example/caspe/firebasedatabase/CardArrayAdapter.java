@@ -29,6 +29,10 @@ public class CardArrayAdapter  extends ArrayAdapter<Card> {
     }
 
     @Override
+    public void clear(){
+        cardList.clear();
+    }
+    @Override
     public void add(Card object) {
         cardList.add(object);
         super.add(object);

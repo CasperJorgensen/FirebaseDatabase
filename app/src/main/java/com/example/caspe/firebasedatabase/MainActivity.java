@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -189,11 +190,16 @@ public void getGroups(String groupName) {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 OverViewUser = dataSnapshot.getValue(User.class);
 
+
+
                 if (OverViewUser != null) {
 
                     if (OverViewUser.getShoppingList() != null) {
 
+
                         cardArrayAdapter.clear();
+                        cardArrayAdapter.notifyDataSetChanged();
+
 
                         for (Map.Entry<String, Boolean> entry : OverViewUser.getShoppingList().entrySet()) {
 
@@ -203,12 +209,17 @@ public void getGroups(String groupName) {
 
                         listView.setAdapter(cardArrayAdapter);
 
+                        Toast.makeText(MainActivity.this, OverViewUser.getShoppingList().size() + "",
+                                Toast.LENGTH_LONG).show();
 
+                        Toast.makeText(MainActivity.this, cardArrayAdapter.getCount() + "",
+                                Toast.LENGTH_LONG).show();
+/*
                         for (Map.Entry<String, Boolean> entry : OverViewUser.getShoppingList().entrySet()) {
 
                             getGroups(entry.getKey());
 
-                        }
+                        } */
                     }
                 }
 
