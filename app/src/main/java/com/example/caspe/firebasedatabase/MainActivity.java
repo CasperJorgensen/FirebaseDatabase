@@ -219,7 +219,7 @@ public void getGroups() {
         builder.setTitle("Create new list");
 
         final EditText input = new EditText(this);
-        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_SHORT_MESSAGE);
         builder.setView(input);
 
         builder.setPositiveButton("Create", new DialogInterface.OnClickListener() {
