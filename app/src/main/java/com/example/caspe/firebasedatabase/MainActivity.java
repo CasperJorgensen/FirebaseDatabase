@@ -3,6 +3,7 @@ package com.example.caspe.firebasedatabase;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -65,7 +66,13 @@ public class MainActivity extends AppCompatActivity {
 
         cardArrayAdapter = new CardArrayAdapter(getApplicationContext(), R.layout.list_item_card);
 
-
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createList();
+            }
+        });
 
        mAuth = FirebaseAuth.getInstance();
 
@@ -293,12 +300,10 @@ public void getGroups(String groupName) {
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.createList:
-                createList();
-                return true;
             case R.id.signOut:
                 mAuth.signOut();
-                startActivity(new Intent(this, SignInActivity.class));
+                startActivity(new Intent(this, MainActivity.class));
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
