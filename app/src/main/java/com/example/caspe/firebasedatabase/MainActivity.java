@@ -256,11 +256,8 @@ public void getGroups(String groupName) {
     }
 
     public void addPerson(){
-
-                Map<String, Boolean> map;
-                map = shop.getUsers();
                 FireBaseHandler fire = new FireBaseHandler();
-                fire.addUserToShoppingList("Test 3", "52e5BgUocRNDJGrNLsqBGgkxOe73", map);
+                fire.addUserToShoppingList("Test 3", "52e5BgUocRNDJGrNLsqBGgkxOe73");
             }
 
 
