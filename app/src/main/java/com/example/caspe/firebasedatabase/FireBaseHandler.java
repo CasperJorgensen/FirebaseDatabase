@@ -1,6 +1,8 @@
 package com.example.caspe.firebasedatabase;
 
 
+import android.provider.ContactsContract;
+
 import com.example.caspe.firebasedatabase.Model.ShoppingList;
 import com.example.caspe.firebasedatabase.Model.User;
 import com.google.firebase.database.DatabaseReference;
@@ -29,7 +31,10 @@ public class FireBaseHandler {
         user.setName(name);
         user.setEmail(email);
 
+
+
         mDatabase.child("users").child(userId).setValue(user);
+
     }
 
     public void AddShoppingList(String name, User user) {

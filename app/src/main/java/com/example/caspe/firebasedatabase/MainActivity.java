@@ -137,7 +137,11 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 // Successfully signed in
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                createUser();
+
+
+                    getUser();
+
+
                 // ...
             } else {
                 // Sign in failed, check response for error code
@@ -196,10 +200,7 @@ public void getGroups(String groupName) {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 OverViewUser = dataSnapshot.getValue(User.class);
-
-
-
-                if (OverViewUser != null) {
+            if (OverViewUser != null) {
 
                     if (OverViewUser.getShoppingList() != null) {
 
@@ -228,6 +229,9 @@ public void getGroups(String groupName) {
 
                         } */
                     }
+                }
+                if(OverViewUser == null) {
+                 createUser();
                 }
 
                 textView.setText(OverViewUser.getName());
