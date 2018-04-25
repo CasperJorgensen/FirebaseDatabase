@@ -99,6 +99,10 @@ public class ShoopingListActivity extends AppCompatActivity {
 
     public  void addUserToList(String uid) {
         FireBaseHandler fire = new FireBaseHandler();
+
+
+
+
         fire.addUserToShoppingList(shoppingList.getName(), uid);
 
     }
