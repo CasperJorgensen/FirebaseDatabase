@@ -2,11 +2,16 @@ package com.example.caspe.firebasedatabase;
 
 
 import android.provider.ContactsContract;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.caspe.firebasedatabase.Model.ShoppingList;
 import com.example.caspe.firebasedatabase.Model.User;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.List;
@@ -67,9 +72,9 @@ public class FireBaseHandler {
 
     }
 
-    public void addUserToShoppingList(String ShoppingListName, String UserId, Map<String, Boolean> Users) {
+    public void addUserToShoppingList(String ShoppingListName, String UserId) {
 
-            Users.put(UserId, true);
+          //  Users.put(UserId, true);
 
         Map<String, Boolean> shoppingListlist = new HashMap<>();
 
@@ -77,7 +82,7 @@ public class FireBaseHandler {
 
 
 
-        DatabaseReference hopperRef = mDatabase.child("users").child(UserId).child("shoppingLists");
+        DatabaseReference hopperRef = mDatabase.child("users").child(UserId).child("shoppingList");
         Map<String, Object> hopperUpdates = new HashMap<>();
         hopperUpdates.put(ShoppingListName, true);
 
@@ -85,8 +90,28 @@ public class FireBaseHandler {
 
         //mDatabase.child("users").child(UserId).child("shoppingLists").setValue(shoppingListlist);
 
-        mDatabase.child("shoppingLists").child(ShoppingListName).setValue(Users);
+        DatabaseReference ShopDB = mDatabase.child("shoppingLists").child(ShoppingListName).child("users");
+        Map<String, Object> shopUpdate = new HashMap<>();
+
+        shopUpdate.put(UserId, true);
+        ShopDB.updateChildren(shopUpdate);
+
+        //mDatabase.child("shoppingLists").child(ShoppingListName).setValue(Users);
     }
+
+
+    public void addAndRemoveItem(String shoppingListName, String name, Boolean check) {
+        DatabaseReference shopDb = mDatabase.child("shoppingLists").child(shoppingListName).child("items");
+        Map<String, Object> shopUpdate = new HashMap<>();
+
+        shopUpdate.put(name, check);
+        shopDb.updateChildren(shopUpdate);
+
+
+    }
+
+
+
 
 
 }

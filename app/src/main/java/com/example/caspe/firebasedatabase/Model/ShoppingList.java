@@ -11,7 +11,7 @@ public class ShoppingList {
 
     String name;
     Map<String, Boolean> users;
-    List<Item> items;
+    Map<String, Boolean> items;
 
     public ShoppingList() {
     }
@@ -37,11 +37,11 @@ public class ShoppingList {
         this.users = users;
     }
 
-    public List<Item> getItems() {
+    public Map<String, Boolean> getItems() {
         return items;
     }
 
-    public void setItems(List<Item> items) {
+    public void setItems(Map<String, Boolean> items) {
         this.items = items;
     }
 }
