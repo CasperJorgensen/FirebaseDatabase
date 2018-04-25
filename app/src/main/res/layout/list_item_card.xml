@@ -8,27 +8,29 @@
     android:descendantFocusability="beforeDescendants">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="15dp"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp"
-        android:paddingRight="15dp"
         android:background="@drawable/com_facebook_tooltip_black_background"
-        android:descendantFocusability="afterDescendants">
+        android:descendantFocusability="afterDescendants"
+        android:orientation="vertical"
+        android:paddingBottom="6dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="6dp">
 
         <TextView
             android:id="@+id/line1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Text line 1"/>
+            android:text="Text line 1"
+            android:textColor="#ffffff"
+            android:textSize="24dp" />
 
         <TextView
             android:id="@+id/line2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Text line 2"/>
+            android:text="" />
 
     </LinearLayout>
 </FrameLayout>

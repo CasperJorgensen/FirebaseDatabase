@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        final Button button = (Button) findViewById(R.id.button3);
+        /*final Button button = (Button) findViewById(R.id.button3);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
 
          addPerson();
            }
-        });
+        });*/
 
 
     }
@@ -234,7 +234,7 @@ public void getGroups(String groupName) {
                  createUser();
                 }
 
-                textView.setText(OverViewUser.getName());
+                textView.setText(OverViewUser.getName() +"");
             }
 
             @Override
@@ -290,10 +290,8 @@ public void getGroups(String groupName) {
         });
 
         builder.show();
-
-
-
     }
+
 
 
     public boolean onCreateOptionsMenu(Menu menu){

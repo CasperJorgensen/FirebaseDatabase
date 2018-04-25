@@ -64,7 +64,7 @@ public class CardArrayAdapter  extends ArrayAdapter<Card> {
         }
         Card card = getItem(position);
         viewHolder.line1.setText(card.getLine1());
-        viewHolder.line2.setText(card.getLine2());
+        viewHolder.line2.setText("");
         return row;
     }
 
