@@ -3,6 +3,10 @@ package com.example.caspe.firebasedatabase;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.style.StrikethroughSpan;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -38,6 +42,7 @@ public class ShoopingListActivity extends AppCompatActivity {
     private ArrayAdapter<String> deletedItemsAdapter;
     private ListView lvItems;
     // ArrayList<User> users;
+    private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,17 +91,28 @@ public class ShoopingListActivity extends AppCompatActivity {
         });
 
 
-        final Button button2 = (Button) findViewById(R.id.btnAddUser);
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addUserToList("Mqgkqnz45hdZspkz0DYEVOZVt2F2");
 
             }
-        });
 
+
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
     }
 
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.addUser:
+                addUserToList("Mqgkqnz45hdZspkz0DYEVOZVt2F2");
+            case R.id.signOut:
+                mAuth.signOut();
+                startActivity(new Intent(this, MainActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     public  void addUserToList(String uid) {
         FireBaseHandler fire = new FireBaseHandler();
@@ -137,7 +153,7 @@ public class ShoopingListActivity extends AppCompatActivity {
                     deletedItems = new ArrayList<String>();
                     deletedItemsAdapter = new ArrayAdapter<String>(ShoopingListActivity.this, android.R.layout.simple_list_item_1, deletedItems);
                     deletedVItems.setAdapter(deletedItemsAdapter);
-
+//Casper is awesome
             if (shoppingList.getItems() != null) {
                     for (Map.Entry<String, Boolean> entry : shoppingList.getItems().entrySet()) {
 
