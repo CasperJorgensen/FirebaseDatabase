@@ -42,7 +42,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-//Sofie
+//Sofie igen
 public class MainActivity extends AppCompatActivity {
     private ArrayList<Map<String, Boolean>> data;
     ShoppingList shop;
