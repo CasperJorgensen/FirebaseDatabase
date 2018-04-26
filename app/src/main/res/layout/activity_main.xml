@@ -8,15 +8,6 @@
     tools:context="com.example.caspe.firebasedatabase.MainActivity">
 
 
-    <TextView
-        android:id="@+id/text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="kopkmijo"
-        android:textSize="24dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
@@ -25,6 +16,7 @@
         android:layout_margin="16dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
+        app:backgroundTint="#3F51B5"
         android:src="@drawable/ic_add_white_48px"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -33,18 +25,14 @@
         android:id="@+id/card_listView"
         android:layout_width="match_parent"
         android:layout_height="488dp"
-        android:layout_marginBottom="2dp"
         android:layout_marginEnd="2dp"
-        android:layout_marginTop="8dp"
         android:cacheColorHint="@android:color/transparent"
         android:divider="@null"
         android:dividerHeight="1dp"
         android:listSelector="@android:color/transparent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text" />
-
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </android.support.constraint.ConstraintLayout>

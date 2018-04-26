@@ -36,6 +36,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     private String m_Text = "";
     private CardArrayAdapter cardArrayAdapter;
     private ListView listView;
+    private ArrayList<String> shoppinglist;
     private TextView textView;
 
     @Override
@@ -61,11 +63,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
+
+
+
+        listView = (ListView) findViewById(R.id.card_listView);
         listView = (ListView) findViewById(R.id.card_listView);
 
         listView.addHeaderView(new View(this));
         listView.addFooterView(new View(this));
 
+        shoppinglist = new ArrayList<>();
         cardArrayAdapter = new CardArrayAdapter(getApplicationContext(), R.layout.list_item_card);
 
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -76,7 +83,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-       mAuth = FirebaseAuth.getInstance();
+
+
+
+        mAuth = FirebaseAuth.getInstance();
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final TextView textView = (TextView)findViewById(R.id.text);
@@ -92,42 +102,20 @@ public class MainActivity extends AppCompatActivity {
 
         }
         else {
-            Toast.makeText(this, "Welcome " + FirebaseAuth.getInstance()
-                            .getCurrentUser()
-                            .getDisplayName()
-                    , Toast.LENGTH_LONG).show();
+
 
 
             getUser();
 
-        onShoppingListClick();
+
+
 
         }
-
-        /*final Button button = (Button) findViewById(R.id.button3);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intent = new Intent(MainActivity.this, CreateShoopingListActivity.class);
-                startActivity(intent);
-               // createList();
-            }
-        });
-
-
-     final Button button2 = (Button) findViewById(R.id.button4);
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-         addPerson();
-           }
-        });*/
+        onShoppingListClick();
 
 
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -151,45 +139,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-public void getGroups(String groupName) {
-    mAuth = FirebaseAuth.getInstance();
 
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-
-    DatabaseReference userDB = database.getReference().child("shoppingLists").child(groupName);
-
-
-
-
-
-
-    userDB.addValueEventListener(new ValueEventListener() {
-        @Override
-        public void onDataChange(DataSnapshot dataSnapshot) {
-
-
-            shop = dataSnapshot.getValue(ShoppingList.class);
-
-
-
-            Toast.makeText(MainActivity.this, shop.getName(),
-                    Toast.LENGTH_LONG).show();
-
-        for (Map.Entry<String, Boolean> entry : shop.getUsers().entrySet()) {
-
-                Toast.makeText(MainActivity.this, entry.getValue().toString() + entry.getKey().toString(),
-                        Toast.LENGTH_LONG).show();
-            }
-        }
-
-        @Override
-        public void onCancelled(DatabaseError databaseError) {
-            System.out.println("The read failed: " + databaseError.getCode());
-
-
-        }
-    });
-}
     public void getUser() {
         mAuth = FirebaseAuth.getInstance();
         String uid = mAuth.getCurrentUser().getUid();
@@ -204,9 +154,8 @@ public void getGroups(String groupName) {
                 OverViewUser = dataSnapshot.getValue(User.class);
             if (OverViewUser != null) {
 
+
                     if (OverViewUser.getShoppingList() != null) {
-
-
                         cardArrayAdapter.clear();
                         cardArrayAdapter.notifyDataSetChanged();
 
@@ -214,6 +163,7 @@ public void getGroups(String groupName) {
                         for (Map.Entry<String, Boolean> entry : OverViewUser.getShoppingList().entrySet()) {
 
                             Card card = new Card(entry.getKey(), entry.getValue().toString());
+                            shoppinglist.add(card.getLine1());
                             cardArrayAdapter.add(card);
                         }
 
@@ -236,7 +186,7 @@ public void getGroups(String groupName) {
                  createUser();
                 }
 
-                textView.setText(OverViewUser.getName() +"");
+                setTitle(OverViewUser.getName() + "Shopping lists");
             }
 
             @Override
@@ -314,12 +264,13 @@ public void getGroups(String groupName) {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                textView = (TextView) findViewById(R.id.line1);
 
-                String text = textView.getText().toString();
 
-                Intent intent = new Intent(getApplicationContext(), ShoopingListActivity.class);
-                intent.putExtra("text", text);
+                String shoppingListName = cardArrayAdapter.getItem(position - 1).getLine1();
+
+
+          Intent intent = new Intent(getApplicationContext(), ShoopingListActivity.class);
+                intent.putExtra("text", shoppingListName);
                 startActivity(intent);
             }
         });
