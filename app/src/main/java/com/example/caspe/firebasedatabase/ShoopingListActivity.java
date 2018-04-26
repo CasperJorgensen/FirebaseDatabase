@@ -43,9 +43,10 @@ public class ShoopingListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shooping_list);
 
+        Intent intent = getIntent();
+        String write = intent.getStringExtra("text");
 
-
-        getShoppingListItems("Fredagsbar");
+        getShoppingListItems(write);
 
 
 

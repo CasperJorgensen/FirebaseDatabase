@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     private String m_Text = "";
     private CardArrayAdapter cardArrayAdapter;
     private ListView listView;
+    private TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
 
             getUser();
 
-
+        onShoppingListClick();
 
         }
 
@@ -306,6 +308,21 @@ public void getGroups(String groupName) {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void onShoppingListClick(){
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                textView = (TextView) findViewById(R.id.line1);
+
+                String text = textView.getText().toString();
+
+                Intent intent = new Intent(getApplicationContext(), ShoopingListActivity.class);
+                intent.putExtra("text", text);
+                startActivity(intent);
+            }
+        });
     }
 
 
