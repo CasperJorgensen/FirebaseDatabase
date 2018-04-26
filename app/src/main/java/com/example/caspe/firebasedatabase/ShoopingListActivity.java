@@ -1,8 +1,11 @@
 package com.example.caspe.firebasedatabase;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.style.StrikethroughSpan;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -42,6 +45,7 @@ public class ShoopingListActivity extends AppCompatActivity {
     private ArrayAdapter<String> deletedItemsAdapter;
     private ListView lvItems;
     // ArrayList<User> users;
+    private String m_Text = "";
     private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,14 +101,15 @@ public class ShoopingListActivity extends AppCompatActivity {
 
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_menu, menu);
+        inflater.inflate(R.menu.shoppinglistmenu, menu);
         return true;
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.addUser:
-                addUserToList("Mqgkqnz45hdZspkz0DYEVOZVt2F2");
+                addUserToList();
+                return true;
             case R.id.signOut:
                 mAuth.signOut();
                 startActivity(new Intent(this, MainActivity.class));
@@ -114,13 +119,38 @@ public class ShoopingListActivity extends AppCompatActivity {
         }
     }
 
-    public  void addUserToList(String uid) {
-        FireBaseHandler fire = new FireBaseHandler();
+    public  void addUserToList() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Add user to shopping lists");
+
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_SHORT_MESSAGE);
+        builder.setView(input);
+
+        builder.setPositiveButton("Add user", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                m_Text = input.getText().toString();
 
 
 
 
-        fire.addUserToShoppingList(shoppingList.getName(), uid);
+
+                FireBaseHandler fire = new FireBaseHandler();
+                fire.addUserToShoppingList(shoppingList.getName(), m_Text);
+
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+
 
     }
 
