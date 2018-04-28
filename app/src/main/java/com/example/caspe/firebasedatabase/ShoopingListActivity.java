@@ -47,6 +47,7 @@ public class ShoopingListActivity extends AppCompatActivity {
     // ArrayList<User> users;
     private String m_Text = "";
     private FirebaseAuth mAuth;
+    private String ShoppingListName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,7 +120,68 @@ public class ShoopingListActivity extends AppCompatActivity {
         }
     }
 
-    public  void addUserToList() {
+
+    //Tak til: https://stackoverflow.com/questions/48905467/firebase-search-child-and-return-parent-key
+    //Tilgået d. 28-04-2018, klokken 22:21
+    public void addUserToList(){
+
+        final FireBaseHandler fire = new FireBaseHandler();
+        final DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("users");
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Add user to shopping list by email");
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+        builder.setView(input);
+
+        builder.setPositiveButton("Add user", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                ref.orderByChild("email").equalTo(String.valueOf(input)).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot datas: dataSnapshot.getChildren()) {
+                            String keys = datas.getKey();
+                            fire.addUserToShoppingList("herkl", keys);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+
+        ref.orderByChild("email").equalTo("sofie6940@gmail.com").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot datas: dataSnapshot.getChildren()){
+                    String keys = datas.getKey();
+                    Toast.makeText(ShoopingListActivity.this, keys,
+                            Toast.LENGTH_LONG).show();
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    /*public  void addUserToList() {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Add user to shopping lists");
@@ -152,7 +214,7 @@ public class ShoopingListActivity extends AppCompatActivity {
         builder.show();
 
 
-    }
+    }*/
 
     public void getShoppingListItems(String ShoppingListName) {
 
@@ -193,12 +255,15 @@ public class ShoopingListActivity extends AppCompatActivity {
                         }
                         if(entry.getValue() == false){
                             deletedItems.add(entry.getKey());
+
+
                         }
 
 
 
                     }
-                }  }
+                }
+                }
             }
 
             @Override

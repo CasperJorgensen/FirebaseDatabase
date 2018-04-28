@@ -55,7 +55,6 @@
         android:id="@+id/lvItems"
         android:layout_width="364dp"
         android:layout_height="245dp"
-
         android:layout_above="@+id/etNewItem"
         android:layout_alignParentStart="true"
         android:layout_marginEnd="8dp"
