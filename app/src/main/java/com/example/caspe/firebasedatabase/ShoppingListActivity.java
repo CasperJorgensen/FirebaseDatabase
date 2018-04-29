@@ -137,6 +137,7 @@ public class ShoppingListActivity extends AppCompatActivity {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         for (DataSnapshot datas: dataSnapshot.getChildren()) {
                             String keys = datas.getKey();
+                            //Todo: herkl er hardcoded. Fix det!
                             fire.addUserToShoppingList("herkl", keys);
                             Toast.makeText(ShoppingListActivity.this, keys, Toast.LENGTH_SHORT).show();
                         }
