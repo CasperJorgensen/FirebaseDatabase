@@ -6,7 +6,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
-import android.text.style.StrikethroughSpan;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,11 +15,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.caspe.firebasedatabase.Model.ShoppingList;
-import com.example.caspe.firebasedatabase.Model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,14 +25,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.w3c.dom.Text;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Map;
 
 //Sofie
-public class ShoopingListActivity extends AppCompatActivity {
+public class ShoppingListActivity extends AppCompatActivity {
 
     ShoppingList shoppingList;
     private ArrayList<String> items;
@@ -137,12 +131,14 @@ public class ShoopingListActivity extends AppCompatActivity {
         builder.setPositiveButton("Add user", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                ref.orderByChild("email").equalTo(String.valueOf(input)).addValueEventListener(new ValueEventListener() {
+                m_Text = input.getText().toString();
+                ref.orderByChild("email").equalTo(m_Text).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         for (DataSnapshot datas: dataSnapshot.getChildren()) {
                             String keys = datas.getKey();
                             fire.addUserToShoppingList("herkl", keys);
+                            Toast.makeText(ShoppingListActivity.this, keys, Toast.LENGTH_SHORT).show();
                         }
                     }
 
@@ -163,22 +159,16 @@ public class ShoopingListActivity extends AppCompatActivity {
 
         builder.show();
 
-        ref.orderByChild("email").equalTo("sofie6940@gmail.com").addValueEventListener(new ValueEventListener() {
+        /*ref.orderByChild("email").equalTo("sofie6940@gmail.com").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot datas: dataSnapshot.getChildren()){
                     String keys = datas.getKey();
-                    Toast.makeText(ShoopingListActivity.this, keys,
+                    Toast.makeText(ShoppingListActivity.this, keys,
                             Toast.LENGTH_LONG).show();
 
                 }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+            }*/
     }
 
     /*public  void addUserToList() {
@@ -227,7 +217,7 @@ public class ShoopingListActivity extends AppCompatActivity {
                 shoppingList = dataSnapshot.getValue(ShoppingList.class);
                 if (shoppingList != null) {
 
-                    Toast.makeText(ShoopingListActivity.this, shoppingList.getName(),
+                    Toast.makeText(ShoppingListActivity.this, shoppingList.getName(),
                             Toast.LENGTH_LONG).show();
 
                    /* if (shoppingList.getUsers().size() != 0) {
@@ -238,12 +228,12 @@ public class ShoopingListActivity extends AppCompatActivity {
 
 
                     items = new ArrayList<String>();
-                    itemsAdapter = new ArrayAdapter<String>(ShoopingListActivity.this, android.R.layout.simple_list_item_1, items);
+                    itemsAdapter = new ArrayAdapter<String>(ShoppingListActivity.this, android.R.layout.simple_list_item_1, items);
                     lvItems.setAdapter(itemsAdapter);
 
 
                     deletedItems = new ArrayList<String>();
-                    deletedItemsAdapter = new ArrayAdapter<String>(ShoopingListActivity.this, android.R.layout.simple_list_item_1, deletedItems);
+                    deletedItemsAdapter = new ArrayAdapter<String>(ShoppingListActivity.this, android.R.layout.simple_list_item_1, deletedItems);
                     deletedVItems.setAdapter(deletedItemsAdapter);
 //Casper is awesome
             if (shoppingList.getItems() != null) {
@@ -287,7 +277,7 @@ public class ShoopingListActivity extends AppCompatActivity {
 
 
                 users.add(user);
-                Toast.makeText(ShoopingListActivity.this, user.getName(),
+                Toast.makeText(ShoppingListActivity.this, user.getName(),
                         Toast.LENGTH_LONG).show();
 
 

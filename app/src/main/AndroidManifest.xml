@@ -23,7 +23,7 @@
         </activity>
         <activity android:name=".CreateUserActivity" />
         <activity android:name=".CreateShoopingListActivity" />
-        <activity android:name=".ShoopingListActivity"
+        <activity android:name=".ShoppingListActivity"
             android:label="Shopping lists"
             android:windowSoftInputMode="stateHidden|adjustNothing"
             />
