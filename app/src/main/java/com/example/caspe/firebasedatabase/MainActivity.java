@@ -158,12 +158,6 @@ public class MainActivity extends AppCompatActivity {
                         }
 
                         listView.setAdapter(cardArrayAdapter);
-
-                        Toast.makeText(MainActivity.this, OverViewUser.getShoppingList().size() + "",
-                                Toast.LENGTH_LONG).show();
-
-                        Toast.makeText(MainActivity.this, cardArrayAdapter.getCount() + "",
-                                Toast.LENGTH_LONG).show();
 /*
                         for (Map.Entry<String, Boolean> entry : OverViewUser.getShoppingList().entrySet()) {
 
@@ -176,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
                  createUser();
                 }
 
-                setTitle(OverViewUser.getName() + "Shopping lists");
+                //setTitle(OverViewUser.getName() + "Shopping lists");
             }
 
             @Override

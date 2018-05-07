@@ -6,4 +6,5 @@
     <string name="addedItemsText">Items</string>
     <string name="addUser">Add user</string>
     <string name="logOut">Log out</string>
+    <string name="main_Activity">Shopping List</string>
 </resources>

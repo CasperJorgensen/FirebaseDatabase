@@ -42,6 +42,7 @@ public class ShoppingListActivity extends AppCompatActivity {
     private String m_Text = "";
     private FirebaseAuth mAuth;
     private String ShoppingListName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,9 +52,7 @@ public class ShoppingListActivity extends AppCompatActivity {
         String write = intent.getStringExtra("text");
 
         getShoppingListItems(write);
-
-
-
+        setTitle(intent.getStringExtra("text"));
 
         lvItems = (ListView) findViewById(R.id.lvItems);
 
@@ -119,8 +118,10 @@ public class ShoppingListActivity extends AppCompatActivity {
     //Tilgået d. 28-04-2018, klokken 22:21
     public void addUserToList(){
 
+
         final FireBaseHandler fire = new FireBaseHandler();
         final DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("users");
+        final DatabaseReference lRef = FirebaseDatabase.getInstance().getReference().child("shoppingLists");
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Add user to shopping list by email");
@@ -137,8 +138,7 @@ public class ShoppingListActivity extends AppCompatActivity {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         for (DataSnapshot datas: dataSnapshot.getChildren()) {
                             String keys = datas.getKey();
-                            //Todo: herkl er hardcoded. Fix det!
-                            fire.addUserToShoppingList("herkl", keys);
+                            fire.addUserToShoppingList(shoppingList.getName(), keys);
                             Toast.makeText(ShoppingListActivity.this, keys, Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -236,7 +236,7 @@ public class ShoppingListActivity extends AppCompatActivity {
                     deletedItems = new ArrayList<String>();
                     deletedItemsAdapter = new ArrayAdapter<String>(ShoppingListActivity.this, android.R.layout.simple_list_item_1, deletedItems);
                     deletedVItems.setAdapter(deletedItemsAdapter);
-//Casper is awesome
+
             if (shoppingList.getItems() != null) {
                     for (Map.Entry<String, Boolean> entry : shoppingList.getItems().entrySet()) {
 
