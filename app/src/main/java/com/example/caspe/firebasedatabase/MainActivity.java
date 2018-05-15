@@ -136,19 +136,14 @@ public class MainActivity extends AppCompatActivity {
         final TextView textView = (TextView)findViewById(R.id.text);
         DatabaseReference userDB = database.getReference().child("users").child(uid);
 
-
         userDB.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 OverViewUser = dataSnapshot.getValue(User.class);
             if (OverViewUser != null) {
-
-
                     if (OverViewUser.getShoppingList() != null) {
                         cardArrayAdapter.clear();
                         cardArrayAdapter.notifyDataSetChanged();
-
-
                         for (Map.Entry<String, Boolean> entry : OverViewUser.getShoppingList().entrySet()) {
 
                             Card card = new Card(entry.getKey(), entry.getValue().toString());
@@ -181,10 +176,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void createUser() {
         if (OverViewUser == null && FirebaseAuth.getInstance().getCurrentUser() != null) {
-
-
             FireBaseHandler fire = new FireBaseHandler();
-            fire.writeNewUser(FirebaseAuth.getInstance().getCurrentUser().getUid(), FirebaseAuth.getInstance().getCurrentUser().getDisplayName(), FirebaseAuth.getInstance().getCurrentUser().getEmail());
+            fire.writeNewUser(FirebaseAuth.getInstance().getCurrentUser().getUid(),
+                    FirebaseAuth.getInstance().getCurrentUser().getDisplayName(),
+                    FirebaseAuth.getInstance().getCurrentUser().getEmail());
             getUser();
         }
 

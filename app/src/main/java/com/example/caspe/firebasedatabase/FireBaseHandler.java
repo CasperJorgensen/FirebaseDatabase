@@ -48,6 +48,7 @@ public class FireBaseHandler {
 
     }
 
+    //Todo: refactor addShoppinglist og måske hopperRef
     public void AddShoppingList(String name, User user) {
         ShoppingList shoppingList = new ShoppingList();
         shoppingList.setName(name);
@@ -58,14 +59,6 @@ public class FireBaseHandler {
 
         shoppingList.setUsers(map);
 
-
-      /*  Map<String, Boolean> shoppingListlist = new HashMap<>();
-
-
-        shoppingListlist.put(name, true);
-        user.setShoppingList(shoppingListlist); */
-
-
         DatabaseReference hopperRef = mDatabase.child("users").child(userId).child("shoppingList");
         Map<String, Object> hopperUpdates = new HashMap<>();
         hopperUpdates.put(name, true);
@@ -73,39 +66,25 @@ public class FireBaseHandler {
         hopperRef.updateChildren(hopperUpdates);
 
         mDatabase.child("shoppingLists").child(name).setValue(shoppingList);
-
-       // mDatabase.child("users").child(userId).setValue(user);
-
     }
 
+    //Todo: Måske refactor hopperRef også her
     public void addUserToShoppingList(String ShoppingListName, String UserId) {
+            Map<String, Boolean> shoppingListlist = new HashMap<>();
+            shoppingListlist.put(ShoppingListName, true);
 
+            DatabaseReference hopperRef = mDatabase.child("users").child(UserId).child("shoppingList");
+            Map<String, Object> hopperUpdates = new HashMap<>();
+            hopperUpdates.put(ShoppingListName, true);
 
+            hopperRef.updateChildren(hopperUpdates);
 
-        Map<String, Boolean> shoppingListlist = new HashMap<>();
+            DatabaseReference ShopDB = mDatabase.child("shoppingLists").child(ShoppingListName).child("users");
+            Map<String, Object> shopUpdate = new HashMap<>();
 
-        shoppingListlist.put(ShoppingListName, true);
-
-
-
-
-        DatabaseReference hopperRef = mDatabase.child("users").child(UserId).child("shoppingList");
-        Map<String, Object> hopperUpdates = new HashMap<>();
-        hopperUpdates.put(ShoppingListName, true);
-
-        hopperRef.updateChildren(hopperUpdates);
-
-        //mDatabase.child("users").child(UserId).child("shoppingLists").setValue(shoppingListlist);
-
-        DatabaseReference ShopDB = mDatabase.child("shoppingLists").child(ShoppingListName).child("users");
-        Map<String, Object> shopUpdate = new HashMap<>();
-
-        shopUpdate.put(UserId, true);
-        ShopDB.updateChildren(shopUpdate);
-
-        //mDatabase.child("shoppingLists").child(ShoppingListName).setValue(Users);
-    }
-
+            shopUpdate.put(UserId, true);
+            ShopDB.updateChildren(shopUpdate);
+        }
 
     public void addAndRemoveItem(String shoppingListName, String name, Boolean check) {
         DatabaseReference shopDb = mDatabase.child("shoppingLists").child(shoppingListName).child("items");
@@ -113,12 +92,5 @@ public class FireBaseHandler {
 
         shopUpdate.put(name, check);
         shopDb.updateChildren(shopUpdate);
-
-
     }
-
-
-
-
-
 }

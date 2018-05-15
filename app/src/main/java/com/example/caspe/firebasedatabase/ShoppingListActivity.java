@@ -116,7 +116,6 @@ public class ShoppingListActivity extends AppCompatActivity {
 
         final FireBaseHandler fire = new FireBaseHandler();
         final DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("users");
-        final DatabaseReference lRef = FirebaseDatabase.getInstance().getReference().child("shoppingLists");
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Add user to shopping list by email");
