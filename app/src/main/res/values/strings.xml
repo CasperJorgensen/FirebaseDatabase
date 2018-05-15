@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">FirebaseDatabase</string>
+    <string name="app_name">Shopping List</string>
     <string name="createList">Create list</string>
     <string name="deletedItemText">Checked items</string>
     <string name="add_Item">Add item</string>

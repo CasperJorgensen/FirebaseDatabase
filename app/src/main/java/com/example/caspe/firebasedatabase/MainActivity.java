@@ -32,7 +32,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-//Sofie igen
 public class MainActivity extends AppCompatActivity {
     private ArrayList<Map<String, Boolean>> data;
     ShoppingList shop;
@@ -46,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private ListView listView;
     private ArrayList<String> shoppinglist;
     private TextView textView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
                             .build(),
                     SIGN_IN_REQUEST_CODE
             );
-
         }
         else {
 

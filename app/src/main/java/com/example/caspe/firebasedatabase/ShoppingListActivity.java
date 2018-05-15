@@ -62,7 +62,6 @@ public class ShoppingListActivity extends AppCompatActivity {
                 // Get the selected item text from ListView
                 String selectedItem = (String) parent.getItemAtPosition(position);
                 handleItem(selectedItem, false);
-
             }
 
             });
@@ -113,11 +112,7 @@ public class ShoppingListActivity extends AppCompatActivity {
         }
     }
 
-
-    //Tak til: https://stackoverflow.com/questions/48905467/firebase-search-child-and-return-parent-key
-    //Tilgået d. 28-04-2018, klokken 22:21
     public void addUserToList(){
-
 
         final FireBaseHandler fire = new FireBaseHandler();
         final DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("users");
@@ -159,56 +154,9 @@ public class ShoppingListActivity extends AppCompatActivity {
         });
 
         builder.show();
-
-        /*ref.orderByChild("email").equalTo("sofie6940@gmail.com").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot datas: dataSnapshot.getChildren()){
-                    String keys = datas.getKey();
-                    Toast.makeText(ShoppingListActivity.this, keys,
-                            Toast.LENGTH_LONG).show();
-
-                }
-            }*/
     }
 
-    /*public  void addUserToList() {
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Add user to shopping lists");
-
-        final EditText input = new EditText(this);
-        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_SHORT_MESSAGE);
-        builder.setView(input);
-
-        builder.setPositiveButton("Add user", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                m_Text = input.getText().toString();
-
-
-
-
-
-                FireBaseHandler fire = new FireBaseHandler();
-                fire.addUserToShoppingList(shoppingList.getName(), m_Text);
-
-            }
-        });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-
-        builder.show();
-
-
-    }*/
-
     public void getShoppingListItems(String ShoppingListName) {
-
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ShopDb = database.getReference().child("shoppingLists").child(ShoppingListName);
@@ -221,17 +169,9 @@ public class ShoppingListActivity extends AppCompatActivity {
                     Toast.makeText(ShoppingListActivity.this, shoppingList.getName(),
                             Toast.LENGTH_LONG).show();
 
-                   /* if (shoppingList.getUsers().size() != 0) {
-                        for (Map.Entry<String, Boolean> entry : shoppingList.getUsers().entrySet()) {
-                            getUser(entry.getKey());
-                        }
-                    } */
-
-
                     items = new ArrayList<String>();
                     itemsAdapter = new ArrayAdapter<String>(ShoppingListActivity.this, android.R.layout.simple_list_item_1, items);
                     lvItems.setAdapter(itemsAdapter);
-
 
                     deletedItems = new ArrayList<String>();
                     deletedItemsAdapter = new ArrayAdapter<String>(ShoppingListActivity.this, android.R.layout.simple_list_item_1, deletedItems);
@@ -240,18 +180,12 @@ public class ShoppingListActivity extends AppCompatActivity {
             if (shoppingList.getItems() != null) {
                     for (Map.Entry<String, Boolean> entry : shoppingList.getItems().entrySet()) {
 
-
                         if (entry.getValue() == true) {
                             items.add(entry.getKey());
                         }
                         if(entry.getValue() == false){
                             deletedItems.add(entry.getKey());
-
-
                         }
-
-
-
                     }
                 }
                 }
@@ -264,32 +198,6 @@ public class ShoppingListActivity extends AppCompatActivity {
             }
     });}
 
-
-  /*  public void getUser(String uid) {
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-
-        DatabaseReference userDB = database.getReference().child("users").child(uid);
-
-
-        userDB.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-
-
-                users.add(user);
-                Toast.makeText(ShoppingListActivity.this, user.getName(),
-                        Toast.LENGTH_LONG).show();
-
-
-                }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed: " + databaseError.getCode());
-            }
-    });
-    }
-*/
     public void onAddItem() {
         EditText etNewItem = (EditText) findViewById(R.id.etNewItem);
         String itemText = etNewItem.getText().toString();
@@ -302,7 +210,4 @@ public class ShoppingListActivity extends AppCompatActivity {
         fire.addAndRemoveItem(shoppingList.getName(), name, check);
 
     }
-
-
-
 }
