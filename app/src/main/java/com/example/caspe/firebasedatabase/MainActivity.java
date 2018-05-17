@@ -242,11 +242,7 @@ public class MainActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-
                 String shoppingListName = cardArrayAdapter.getItem(position - 1).getLine1();
-
-
           Intent intent = new Intent(getApplicationContext(), ShoppingListActivity.class);
                 intent.putExtra("text", shoppingListName);
                 startActivity(intent);
