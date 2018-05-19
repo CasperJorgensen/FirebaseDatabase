@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <defaultsMap>
     <entry>
-        <key>loading_phrase</key>
-        <value>Fetching</value>
+        <key>deleted_items</key>
+        <value>Deleted items</value>
+    </entry>
+    <entry>
+        <key>added_items</key>
+        <value>Added items</value>
+    </entry>
+    <entry>
+        <key>added_items_color</key>
+        <value>#3f51b5</value>
     </entry>
 </defaultsMap>

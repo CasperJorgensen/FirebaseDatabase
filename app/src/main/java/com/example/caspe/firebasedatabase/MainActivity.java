@@ -8,6 +8,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -21,6 +22,11 @@ import android.widget.Toast;
 import com.example.caspe.firebasedatabase.Model.ShoppingList;
 import com.example.caspe.firebasedatabase.Model.User;
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.api.GoogleApi;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.zze;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -57,13 +63,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
-
-
         listView = (ListView) findViewById(R.id.card_listView);
         listView = (ListView) findViewById(R.id.card_listView);
-
         listView.addHeaderView(new View(this));
         listView.addFooterView(new View(this));
 
@@ -80,13 +81,20 @@ public class MainActivity extends AppCompatActivity {
 
         mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
 
-
         mAuth = FirebaseAuth.getInstance();
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final TextView textView = (TextView)findViewById(R.id.text);
 
 
+        onShoppingListClick();
+        //GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);
+        checkPlayServices();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         if (FirebaseAuth.getInstance().getCurrentUser() == null){
             startActivityForResult(
                     AuthUI.getInstance()
@@ -96,20 +104,43 @@ public class MainActivity extends AppCompatActivity {
             );
         }
         else {
-
-
-
             getUser();
-
-
-
-
         }
-        onShoppingListClick();
+        checkPlayServices();
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
 
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    private boolean checkPlayServices() {
+        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
+        int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (apiAvailability.isUserResolvableError(resultCode)) {
+                apiAvailability.getErrorDialog(this, resultCode, GoogleApiAvailability.GOOGLE_PLAY_SERVICES_VERSION_CODE)
+                        .show();
+            } else {
+                Log.i(TAG, "This device is not supported.");
+                finish();
+            }
+            return false;
+        }
+        return true;
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

@@ -49,10 +49,14 @@ public class ShoppingListActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private String ShoppingListName;
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
-    private static final String DELETED_COLOR = "deleted_color";
-    private static final String LOADING_PHRASE_CONFIG_KEY = "loading_phrase";
+
+    //Remote Config
+    private static final String DELETED_ITEM = "deleted_items";
+    private static final String ADDED_ITEM = "added_items";
+    private static final String ADDED_ITEM_COLOR = "added_items_color";
 
     private TextView deletedText;
+    private TextView addedText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +66,7 @@ public class ShoppingListActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String write = intent.getStringExtra("text");
         deletedText = (TextView) findViewById(R.id.deletedItemText);
+        addedText = (TextView) findViewById(R.id.addedItemsText);
 
         getShoppingListItems(write);
         setTitle(intent.getStringExtra("text"));
@@ -99,51 +104,34 @@ public class ShoppingListActivity extends AppCompatActivity {
             }
         });
 
+        //Også til Remote Config
         mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
         FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
                 .setDeveloperModeEnabled(BuildConfig.DEBUG)
                 .build();
         mFirebaseRemoteConfig.setConfigSettings(configSettings);
-
         mFirebaseRemoteConfig.setDefaults(R.xml.remote_config_defaults);
-
-        fetchWelcome();
+        remoteConfig();
         }
 
-    private void fetchWelcome() {
-        deletedText.setText(mFirebaseRemoteConfig.getString(LOADING_PHRASE_CONFIG_KEY));
-        long cacheExpiration = 1; // 1 hour in seconds.
-        // If in developer mode cacheExpiration is set to 0 so each fetch will retrieve values from
-        // the server.
+    //Remote config
+    private void remoteConfig() {
+        deletedText.setText(mFirebaseRemoteConfig.getString(DELETED_ITEM));
+        addedText.setText(mFirebaseRemoteConfig.getString(ADDED_ITEM));
+
+        long cacheExpiration = 3600; // 1 hour in seconds.
         if (mFirebaseRemoteConfig.getInfo( ).getConfigSettings( ).isDeveloperModeEnabled( )) {
             cacheExpiration = 0;
         }
-
-
-        // [START fetch_config_with_callback]
-        // cacheExpirationSeconds is set to cacheExpiration here, indicating that any previously
-        // fetched and cached config would be considered expired because it would have been fetched
-        // more than cacheExpiration seconds ago. Thus the next fetch would go to the server unless
-        // throttling is in progress. The default expiration duration is 43200 (12 hours).
         mFirebaseRemoteConfig.fetch ( cacheExpiration )
                 .addOnCompleteListener ( this, new OnCompleteListener <Void>( ) {
                     @Override
                     public void onComplete(@NonNull Task <Void> task ) {
                         if ( task.isSuccessful ( )) {
-                            Toast.makeText ( ShoppingListActivity.this, "Fetch Succeeded",
-                                    Toast.LENGTH_SHORT ).show();
-
-
-                            // Once the config is successfully fetched it must be activated before newly fetched
-                            // values are returned.
                             mFirebaseRemoteConfig.activateFetched();
-                        } else {
-                            Toast.makeText ( ShoppingListActivity.this, "Fetch Failed",
-                                    Toast.LENGTH_SHORT).show( );
                         }
-
                     }
-                } );
+                });
     }
 
     public boolean onCreateOptionsMenu(Menu menu){
