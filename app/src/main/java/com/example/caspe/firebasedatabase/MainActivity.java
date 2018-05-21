@@ -1,5 +1,6 @@
 package com.example.caspe.firebasedatabase;
 
+import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -19,6 +20,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.caspe.firebasedatabase.Model.Item;
+import com.google.firebase.perf.FirebasePerformance;
+import com.google.firebase.perf.metrics.Trace;
+
+import com.crashlytics.android.Crashlytics;
 import com.example.caspe.firebasedatabase.Model.ShoppingList;
 import com.example.caspe.firebasedatabase.Model.User;
 import com.firebase.ui.auth.AuthUI;
@@ -90,6 +96,11 @@ public class MainActivity extends AppCompatActivity {
         onShoppingListClick();
         //GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);
         checkPlayServices();
+
+
+
+
+
     }
 
     @Override
@@ -106,7 +117,11 @@ public class MainActivity extends AppCompatActivity {
         else {
             getUser();
         }
+
         checkPlayServices();
+
+
+
     }
 
     @Override
@@ -166,6 +181,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void getUser() {
+        final Trace myTrace = FirebasePerformance.getInstance().newTrace("test_trace");
+        myTrace.start();
+
         mAuth = FirebaseAuth.getInstance();
         String uid = mAuth.getCurrentUser().getUid();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -185,6 +203,7 @@ public class MainActivity extends AppCompatActivity {
                             Card card = new Card(entry.getKey(), entry.getValue().toString());
                             shoppinglist.add(card.getLine1());
                             cardArrayAdapter.add(card);
+                            myTrace.stop();
                         }
 
                         listView.setAdapter(cardArrayAdapter);
@@ -265,6 +284,9 @@ public class MainActivity extends AppCompatActivity {
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.forceCrash:
+                Crashlytics.getInstance().crash();
+                return true;
             case R.id.signOut:
                 mAuth.signOut();
                 startActivity(new Intent(this, MainActivity.class));
